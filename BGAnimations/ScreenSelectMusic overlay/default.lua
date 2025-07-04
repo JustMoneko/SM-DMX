@@ -9,7 +9,7 @@ local t = Def.ActorFrame {
 
 t[#t+1] = Def.ActorFrame {
 	Def.BitmapText {
-		Font="_Impact Bold Normal",
+		Font="_Courier",
 		Text="the quick brown fox jumps over the lazy dog",
 		InitCommand=function(self) 
             self:xy(16, 16):align(0, 0)
@@ -17,7 +17,7 @@ t[#t+1] = Def.ActorFrame {
 	},
     
     Def.BitmapText {
-		Font="_Impact Bold Normal",
+		Font="_Courier",
 		Text="THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG",
 		InitCommand=function(self) 
             self:xy(16, 48):align(0, 0)
@@ -25,7 +25,7 @@ t[#t+1] = Def.ActorFrame {
 	},
     
     Def.BitmapText {
-		Font="_Impact Bold Normal",
+		Font="_Courier",
 		Text="0123456789 !#$%^&(){}[]-+=_",
 		InitCommand=function(self) 
             self:xy(16, 80):align(0, 0)
