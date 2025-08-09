@@ -1,14 +1,18 @@
 local t = Def.ActorFrame {
 	InitCommand=function(self)
-		self:xy(SCREEN_CENTER_X + 2, SCREEN_CENTER_Y - 21)
+		self:xy(SCREEN_CENTER_X + 3, SCREEN_CENTER_Y - 22)
+	end,
+	
+	OnCommand=function(self)
+		self:queuecommand("CurrentSongChanged")
 	end,
 	
 	CurrentSongChangedMessageCommand=function(self)
 		local Song = GAMESTATE:GetCurrentSong()
 		
 		if Song then
-			self:GetChild("SongName"):settext(Song:GetDisplayMainTitle())
-			self:GetChild("SongArtist"):settext(Song:GetDisplayArtist())
+			self:GetChild("SongName"):settext(Song:GetDisplayMainTitle()):stoptweening():sleep(0.15):cropright(1):linear(0.5):cropright(0)
+			self:GetChild("SongArtist"):settext(Song:GetDisplayArtist()):stoptweening():cropright(1):linear(0.5):cropright(0)
 			self:GetChild("SongBPM"):settext(math.ceil(Song:GetDisplayBpms()[2]))
 			
 			ChartArray = SongUtil.GetPlayableSteps(Song)
@@ -41,7 +45,7 @@ local t = Def.ActorFrame {
 	Def.Sprite {
         Texture=THEME:GetPathG("", "SelectMusic/SongInfoBar.png"),
 		InitCommand=function(self)
-			
+			self:diffusealpha(0.5)
 		end,
     },
 	
@@ -50,7 +54,7 @@ local t = Def.ActorFrame {
 		Font="_Impact Bold Normal",
 		Text="",
 		InitCommand=function(self) 
-            self:xy(-29, -37)
+            self:xy(-29, -38)
 			:halign(0)
         end,
 	},
@@ -70,7 +74,7 @@ local t = Def.ActorFrame {
 		Font="_Impact Bold Normal",
 		Text="",
 		InitCommand=function(self) 
-            self:xy(286, 33)
+            self:xy(285, 33)
         end,
 	},
 	
@@ -78,7 +82,7 @@ local t = Def.ActorFrame {
 		Name="MildStars",
 		Texture=THEME:GetPathG("", "SelectMusic/MildStars 1x8 (doubleres).png"),
 		InitCommand=function(self)
-			self:xy(45, 32)
+			self:xy(43, 33)
 			:animate(false)
 		end,
 	},
@@ -87,7 +91,7 @@ local t = Def.ActorFrame {
 		Name="WildStars",
 		Texture=THEME:GetPathG("", "SelectMusic/WildStars 1x5 (doubleres).png"),
 		InitCommand=function(self)
-			self:xy(181, 17)
+			self:xy(181, 18)
 			:animate(false)
 		end,
 	},
