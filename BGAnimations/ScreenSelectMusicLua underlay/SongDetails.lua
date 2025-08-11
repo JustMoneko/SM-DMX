@@ -11,8 +11,18 @@ local t = Def.ActorFrame {
 		local Song = GAMESTATE:GetCurrentSong()
 		
 		if Song then
-			self:GetChild("SongName"):settext(Song:GetDisplayMainTitle()):stoptweening():sleep(0.15):cropright(1):linear(0.5):cropright(0)
-			self:GetChild("SongArtist"):settext(Song:GetDisplayArtist()):stoptweening():cropright(1):linear(0.5):cropright(0)
+			self:GetChild("SongName")
+                :settext(Song:GetDisplayMainTitle())
+                :stoptweening()
+                :cropright(1)
+                :linear(0.25)
+                :cropright(0)
+			self:GetChild("SongArtist")
+                :settext(Song:GetDisplayArtist())
+                :stoptweening()
+                :cropright(1)
+                :linear(0.25)
+                :cropright(0)
 			self:GetChild("SongBPM"):settext(math.ceil(Song:GetDisplayBpms()[2]))
 			
 			ChartArray = SongUtil.GetPlayableSteps(Song)

@@ -1,12 +1,15 @@
-local WheelSize = 5
-local WheelCenter = 3
+local WheelSize = 8
+local WheelCenter = 4
 local WheelItem = { Width = 95, Height = 71 }
 local WheelItemPos = {
-	{x = -78, y = -190, z = -80, rotx = -45, roty = 20, rotz = 30},
-	{x = -48, y = -100, z = -20, rotx = -20, roty = 10, rotz = 6},
+    {x = -77, y = -189, z = -80, rotx = -46, roty = 20, rotz = 25},
+	{x = -77, y = -189, z = -80, rotx = -46, roty = 20, rotz = 25},
+	{x = -48.66, y = -100, z = -20, rotx = -21, roty = 11, rotz = 7},
 	{x = 0, y = 0, z = 0, rotx = 0, roty = 0, rotz = 0},
-	{x = 67, y = 100, z = -20, rotx = 15, roty = -5, rotz = 0},
-	{x = 130, y = 200, z = -80, rotx = 30, roty = -10, rotz = 15},
+	{x = 66.5, y = 100, z = -20, rotx = 15, roty = -5, rotz = 2},
+	{x = 140, y = 187, z = -80, rotx = 40, roty = -20, rotz = 15},
+    {x = 200, y = 240, z = -140, rotx = 50, roty = -20, rotz = 15},
+    {x = 0, y = 0, z = 0, rotx = 0, roty = 0, rotz = 0},
 }
 
 local Songs = {}
@@ -122,10 +125,10 @@ local t = Def.ActorFrame {
 
     -- These are to control the functionality of the music wheel
     SongChosenMessageCommand=function(self)
-        self:stoptweening():playcommand("Busy")
+        self:finishtweening():playcommand("Busy")
     end,
     SongUnchosenMessageCommand=function(self)
-        self:stoptweening():playcommand("NotBusy")
+        self:finishtweening():playcommand("NotBusy")
     end,
     
     BusyCommand=function(self) IsBusy = true end,
@@ -135,7 +138,7 @@ local t = Def.ActorFrame {
     Def.Actor {
         CurrentSongChangedMessageCommand=function(self)
             SOUND:StopMusic()
-            self:stoptweening():sleep(0.25):queuecommand("PlayMusic")
+            self:finishtweening():sleep(0.25):queuecommand("PlayMusic")
         end,
         
         PlayMusicCommand=function(self)
@@ -183,7 +186,8 @@ for i = 1, WheelSize do
 		end,
 
         ScrollMessageCommand=function(self,param)
-            self:stoptweening()
+            self:finishtweening()
+            self:GetChild("Banner"):shadowcolor(color("#00000000"))
 
             -- Only tween if a direction was specified
             local tween = param and param.Direction and math.abs(param.Direction) > 0
@@ -197,7 +201,7 @@ for i = 1, WheelSize do
             if i == 1 or i == WheelSize then
 				UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
             elseif tween then
-                self:linear(0.25)
+                self:linear(0.166)
             end
 
             -- Animate!
@@ -207,6 +211,10 @@ for i = 1, WheelSize do
 			:rotationx(WheelItemPos[i].rotx)
 			:rotationy(WheelItemPos[i].roty)
 			:rotationz(WheelItemPos[i].rotz)
+            
+             -- Restore shadow
+            self:GetChild("Banner"):linear(0.1):shadowcolor(color("#00000077"))
+            
             self:GetChild("Index"):playcommand("Refresh")
         end,
 
@@ -216,7 +224,7 @@ for i = 1, WheelSize do
 				self:shadowlengthx(13)
 				:shadowlengthy(9)
 				:shadowcolor(color("#00000077"))
-				--self:diffusealpha(0.5)
+				self:diffusealpha(0.5)
 			end,
         },
 
