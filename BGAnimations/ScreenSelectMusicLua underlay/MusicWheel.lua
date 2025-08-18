@@ -1,15 +1,17 @@
-local WheelSize = 8
+local WheelSize = 10
 local WheelCenter = 4
 local WheelItem = { Width = 95, Height = 71 }
 local WheelItemPos = {
-    {x = -77, y = -189, z = -80, rotx = -46, roty = 20, rotz = 25},
+    {x = -100, y = -240, z = -140, rotx = -56, roty = 20, rotz = 25},
 	{x = -77, y = -189, z = -80, rotx = -46, roty = 20, rotz = 25},
 	{x = -48.66, y = -100, z = -20, rotx = -21, roty = 11, rotz = 7},
 	{x = 0, y = 0, z = 0, rotx = 0, roty = 0, rotz = 0},
 	{x = 66.5, y = 100, z = -20, rotx = 15, roty = -5, rotz = 2},
 	{x = 140, y = 187, z = -80, rotx = 40, roty = -20, rotz = 15},
     {x = 200, y = 240, z = -140, rotx = 50, roty = -20, rotz = 15},
-    {x = 0, y = 0, z = 0, rotx = 0, roty = 0, rotz = 0},
+    {x = -144, y = -105, z = -45, rotx = -32, roty = 36, rotz = 21},
+    {x = -122, y = -12.5, z = -30, rotx = -4, roty = 25, rotz = 0},
+    {x = -57, y = 91, z = -13, rotx = 15, roty = 15, rotz = -7},
 }
 
 local Songs = {}
