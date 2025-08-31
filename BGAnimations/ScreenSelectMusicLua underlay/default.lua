@@ -31,7 +31,7 @@ local t = Def.ActorFrame {
 	Def.Sprite {
         Texture=THEME:GetPathG("", "SelectMusic/SongSelect1.png"),
         InitCommand=function(self)
-            self:Center():diffusealpha(1)
+            self:Center():diffusealpha(0)
         end,
     },
 	

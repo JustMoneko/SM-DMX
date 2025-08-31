@@ -1,17 +1,25 @@
-local WheelSize = 10
+local WheelSize = 18
 local WheelCenter = 4
 local WheelItem = { Width = 95, Height = 71 }
 local WheelItemPos = {
-    {x = -100, y = -240, z = -140, rotx = -56, roty = 20, rotz = 25},
+    {x = -100, y = -280, z = -200, rotx = -56, roty = 20, rotz = 25},
 	{x = -77, y = -189, z = -80, rotx = -46, roty = 20, rotz = 25},
 	{x = -48.66, y = -100, z = -20, rotx = -21, roty = 11, rotz = 7},
 	{x = 0, y = 0, z = 0, rotx = 0, roty = 0, rotz = 0},
 	{x = 66.5, y = 100, z = -20, rotx = 15, roty = -5, rotz = 2},
 	{x = 140, y = 187, z = -80, rotx = 40, roty = -20, rotz = 15},
     {x = 200, y = 240, z = -140, rotx = 50, roty = -20, rotz = 15},
+	{x = -200, y = -220, z = -200, rotx = -50, roty = 30, rotz = 25},
     {x = -144, y = -105, z = -45, rotx = -32, roty = 36, rotz = 21},
     {x = -122, y = -12.5, z = -30, rotx = -4, roty = 25, rotz = 0},
     {x = -57, y = 91, z = -13, rotx = 15, roty = 15, rotz = -7},
+	{x = 12.5, y = 179, z = -42, rotx = 35, roty = 2, rotz = -4},
+	{x = 80, y = 270, z = -140, rotx = 50, roty = -5, rotz = 2},
+	{x = -240, y = -120, z = -160, rotx = -35, roty = 50, rotz = 35},
+	{x = -205, y = -20, z = -80, rotx = -10, roty = 52, rotz = 5},
+	{x = -164, y = 76, z = -50, rotx = 17, roty = 39, rotz = -15},
+	{x = -110, y = 178, z = -80, rotx = 37, roty = 25, rotz = -24},
+	{x = -40, y = 270, z = -140, rotx = 50, roty = 5, rotz = -2},
 }
 
 local Songs = {}
@@ -202,9 +210,11 @@ for i = 1, WheelSize do
             -- If it's an edge item, load a new banner. Edge items should never tween
             if i == 1 or i == WheelSize then
 				UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
-            elseif tween then
-                self:linear(0.166)
+            --elseif tween then
+                --self:linear(0.166)
             end
+			
+			self:linear(0.166)
 
             -- Animate!
 			self:x(WheelItemPos[i].x)
@@ -213,6 +223,12 @@ for i = 1, WheelSize do
 			:rotationx(WheelItemPos[i].rotx)
 			:rotationy(WheelItemPos[i].roty)
 			:rotationz(WheelItemPos[i].rotz)
+			
+			if i == 1 or i == 7 or i == 8 or i == 13 or i == 14 or i == 18 then
+				self:diffusealpha(0)
+			else
+				self:diffusealpha(1)
+			end
             
              -- Restore shadow
             self:GetChild("Banner"):linear(0.1):shadowcolor(color("#00000077"))
@@ -226,7 +242,7 @@ for i = 1, WheelSize do
 				self:shadowlengthx(13)
 				:shadowlengthy(9)
 				:shadowcolor(color("#00000077"))
-				self:diffusealpha(0.5)
+				self:diffusealpha(1)
 			end,
         },
 
