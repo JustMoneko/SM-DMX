@@ -17,7 +17,7 @@ local t = Def.ActorFrame {
 	TimerExpiredCommand=function(self)
 		-- Set these or else we crash.
         GAMESTATE:SetCurrentPlayMode("PlayMode_Regular")
-        GAMESTATE:SetCurrentStyle(GAMESTATE:GetNumSidesJoined() > 1 and "versus" or string.lower(ShortType(GAMESTATE:GetCurrentSteps(GAMESTATE:GetMasterPlayerNumber()))))
+		GAMESTATE:SetCurrentStyle(GAMESTATE:GetNumSidesJoined() > 1 and "versus" or "single")
         SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 	end,
 	
@@ -46,6 +46,12 @@ local t = Def.ActorFrame {
 	LoadActor("SongDetails"),
 	
 	LoadActor("MusicWheel"),
+	
+	LoadActor("SelectDiff") .. {
+		InitCommand=function(self)
+			self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y + 122)
+		end
+	},
 	
 	Def.Sprite {
 		Name="MenuButtonsP1",

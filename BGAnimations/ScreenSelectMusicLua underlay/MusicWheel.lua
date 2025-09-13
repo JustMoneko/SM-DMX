@@ -63,48 +63,39 @@ local function InputHandler(event)
 
     local button = event.GameButton
     
-    -- If an unjoined player attempts to join and has enough credits, join them
-    if (button == "Start" or button == "MenuStart" or button == "Center") and 
-        not GAMESTATE:IsSideJoined(pn) and GAMESTATE:GetCoins() >= GAMESTATE:GetCoinsNeededToJoin() then
-        GAMESTATE:JoinPlayer(pn)
-        -- The command above does not deduct credits so we'll do it ourselves
-        GAMESTATE:InsertCoin(-(GAMESTATE:GetCoinsNeededToJoin()))
-        MESSAGEMAN:Broadcast("PlayerJoined", { Player = pn })
-    else
-		-- To avoid control from a player that has not joined, filter the inputs out
-		if pn == PLAYER_1 and not GAMESTATE:IsPlayerEnabled(PLAYER_1) then return end
-		if pn == PLAYER_2 and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then return end
+	-- To avoid control from a player that has not joined, filter the inputs out
+	if pn == PLAYER_1 and not GAMESTATE:IsPlayerEnabled(PLAYER_1) then return end
+	if pn == PLAYER_2 and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then return end
 
-		if not IsBusy then
-			if button == "Left" or button == "MenuLeft" or button == "DownLeft" then
-				SongIndex = SongIndex - 1
-				if SongIndex < 1 then SongIndex = #Songs end
-				
-				GAMESTATE:SetCurrentSong(Songs[SongIndex])
-				UpdateItemTargets(SongIndex)
-				MESSAGEMAN:Broadcast("Scroll", { Direction = -1 })
+	if not IsBusy then
+		if button == "Left" or button == "MenuLeft" or button == "DownLeft" then
+			SongIndex = SongIndex - 1
+			if SongIndex < 1 then SongIndex = #Songs end
+			
+			GAMESTATE:SetCurrentSong(Songs[SongIndex])
+			UpdateItemTargets(SongIndex)
+			MESSAGEMAN:Broadcast("Scroll", { Direction = -1 })
 
-			elseif button == "Right" or button == "MenuRight" or button == "DownRight" then
-				SongIndex = SongIndex + 1
-				if SongIndex > #Songs then SongIndex = 1 end
-				
-				GAMESTATE:SetCurrentSong(Songs[SongIndex])
-				UpdateItemTargets(SongIndex)
-				MESSAGEMAN:Broadcast("Scroll", { Direction = 1 })
-				
-			elseif button == "Start" or button == "MenuStart" or button == "Center" then
-				-- Save this for later
-				LastSongIndex = SongIndex
-				
-				MESSAGEMAN:Broadcast("MusicWheelStart")
+		elseif button == "Right" or button == "MenuRight" or button == "DownRight" then
+			SongIndex = SongIndex + 1
+			if SongIndex > #Songs then SongIndex = 1 end
+			
+			GAMESTATE:SetCurrentSong(Songs[SongIndex])
+			UpdateItemTargets(SongIndex)
+			MESSAGEMAN:Broadcast("Scroll", { Direction = 1 })
+			
+		elseif button == "Start" or button == "MenuStart" or button == "Center" then
+			-- Save this for later
+			LastSongIndex = SongIndex
+			
+			MESSAGEMAN:Broadcast("MusicWheelStart")
 
-			elseif button == "Back" then
-				SCREENMAN:GetTopScreen():Cancel()
-			end
+		elseif button == "Back" then
+			SCREENMAN:GetTopScreen():Cancel()
 		end
-
-		MESSAGEMAN:Broadcast("UpdateMusic")
 	end
+
+	MESSAGEMAN:Broadcast("UpdateMusic")
 end
 
 -- Manages banner on sprite
