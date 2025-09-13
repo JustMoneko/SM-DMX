@@ -55,7 +55,7 @@ local t = Def.ActorFrame {
 	Def.Sprite {
         Texture=THEME:GetPathG("", "SelectMusic/SongInfoBar.png"),
 		InitCommand=function(self)
-			self:diffusealpha(0.5)
+			self:diffusealpha(0.75)
 		end,
     },
 	
@@ -66,6 +66,7 @@ local t = Def.ActorFrame {
 		InitCommand=function(self) 
             self:xy(-29, -38)
 			:halign(0)
+			:diffuse(color("#00ff84"))
         end,
 	},
     
@@ -76,6 +77,7 @@ local t = Def.ActorFrame {
 		InitCommand=function(self) 
             self:xy(-29, -14)
 			:halign(0)
+			:diffuse(color("#00ff84"))
         end,
 	},
     
@@ -85,6 +87,7 @@ local t = Def.ActorFrame {
 		Text="",
 		InitCommand=function(self) 
             self:xy(285, 33)
+			:diffuse(color("#00ff84"))
         end,
 	},
 	
