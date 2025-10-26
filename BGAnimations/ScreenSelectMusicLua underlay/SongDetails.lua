@@ -15,16 +15,22 @@ local t = Def.ActorFrame {
                 :settext(Song:GetDisplayMainTitle())
                 :stoptweening()
                 :cropright(1)
-                :linear(0.25)
+				:sleep(0.125)
+                :linear(0.125)
                 :cropright(0)
 			self:GetChild("SongArtist")
                 :settext(Song:GetDisplayArtist())
                 :stoptweening()
                 :cropright(1)
+				:sleep(0.8)
                 :linear(0.25)
                 :cropright(0)
-			self:GetChild("SongBPM"):settext(math.ceil(Song:GetDisplayBpms()[2]))
-			
+			self:GetChild("SongBPM")
+                :stoptweening()
+                :diffusealpha(0)
+				:sleep(0.25)
+                :diffusealpha(1)
+
 			ChartArray = SongUtil.GetPlayableSteps(Song)
 			
 			if ChartArray[1] then
@@ -57,6 +63,9 @@ local t = Def.ActorFrame {
 		InitCommand=function(self)
 			self:diffusealpha(0.75)
 		end,
+		CurrentSongChangedMessageCommand=function(self)
+			self:stoptweening():diffusealpha(0):linear(0.125):diffusealpha(0.75)
+		end,
     },
 	
 	Def.BitmapText {
@@ -64,8 +73,10 @@ local t = Def.ActorFrame {
 		Font="_Impact Bold Normal",
 		Text="",
 		InitCommand=function(self) 
-            self:xy(-29, -38)
+            self:xy(-29, -40)
 			:halign(0)
+			:maxwidth(340)
+			:SetTextureFiltering(false)
 			:diffuse(color("#00ff84"))
         end,
 	},
@@ -77,6 +88,8 @@ local t = Def.ActorFrame {
 		InitCommand=function(self) 
             self:xy(-29, -14)
 			:halign(0)
+			:maxwidth(340)
+			:SetTextureFiltering(false)
 			:diffuse(color("#00ff84"))
         end,
 	},
@@ -84,11 +97,22 @@ local t = Def.ActorFrame {
     Def.BitmapText {
 		Name="SongBPM",
 		Font="_Impact Bold Normal",
-		Text="",
 		InitCommand=function(self) 
             self:xy(285, 33)
 			:diffuse(color("#00ff84"))
         end,
+		CurrentSongChangedMessageCommand=function(self)
+			local song = GAMESTATE:GetCurrentSong();
+			if song then
+				if song:IsDisplayBpmRandom() then
+					self:settext("???")
+				else
+					self:settext(math.ceil(song:GetDisplayBpms()[2]))
+				end;
+			else
+				self:settext("???");
+			end;
+		end,
 	},
 	
 	Def.Sprite {
@@ -98,14 +122,20 @@ local t = Def.ActorFrame {
 			self:xy(43, 33)
 			:animate(false)
 		end,
+		CurrentSongChangedMessageCommand=function(self)
+			self:finishtweening():SetTextureFiltering(false):diffusealpha(0):sleep(0.125):diffusealpha(1):decelerate(0.05):zoomx(1.1):zoomy(2):decelerate(0.05):zoomx(1):zoomy(1)
+		end,
 	},
 	
 	Def.Sprite {
 		Name="WildStars",
 		Texture=THEME:GetPathG("", "SelectMusic/WildStars 1x5 (doubleres).png"),
 		InitCommand=function(self)
-			self:xy(181, 18)
+			self:xy(181, 19)
 			:animate(false)
+		end,
+		CurrentSongChangedMessageCommand=function(self)
+			self:finishtweening():SetTextureFiltering(false):diffusealpha(0):sleep(0.125):diffusealpha(1):decelerate(0.05):zoomx(1.1):zoomy(2):decelerate(0.05):zoomx(1):zoomy(1)
 		end,
 	},
 }

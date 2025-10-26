@@ -68,7 +68,7 @@ local function InputHandler(event)
 	if pn == PLAYER_2 and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then return end
 
 	if not IsBusy then
-		if button == "Left" or button == "MenuLeft" or button == "DownLeft" then
+		if button == "Right" or button == "MenuRight" or button == "DownRight" then
 			SongIndex = SongIndex - 1
 			if SongIndex < 1 then SongIndex = #Songs end
 			
@@ -76,7 +76,7 @@ local function InputHandler(event)
 			UpdateItemTargets(SongIndex)
 			MESSAGEMAN:Broadcast("Scroll", { Direction = -1 })
 
-		elseif button == "Right" or button == "MenuRight" or button == "DownRight" then
+		elseif button == "Left" or button == "MenuLeft" or button == "DownLeft" then
 			SongIndex = SongIndex + 1
 			if SongIndex > #Songs then SongIndex = 1 end
 			
@@ -139,7 +139,7 @@ local t = Def.ActorFrame {
     Def.Actor {
         CurrentSongChangedMessageCommand=function(self)
             SOUND:StopMusic()
-            self:finishtweening():sleep(0.25):queuecommand("PlayMusic")
+            self:stoptweening():sleep(2):queuecommand("PlayMusic")
         end,
         
         PlayMusicCommand=function(self)
@@ -150,7 +150,21 @@ local t = Def.ActorFrame {
             end
         end
     },
-
+	Def.Sound {
+        File=THEME:GetPathS("Common", "scan"),
+        CurrentSongChangedMessageCommand=cmd(stoptweening;stop;sleep,1;queuecommand,"Play");
+		PlayCommand=cmd(play);
+    },
+	Def.Sound {
+        File=THEME:GetPathS("", "WheelIntro"),
+        OnCommand=cmd(queuecommand,"Play");
+		PlayCommand=cmd(play);
+    },
+	Def.Sound {
+        File=THEME:GetPathS("Common", "typing"),
+        CurrentSongChangedMessageCommand=cmd(stoptweening;stop;sleep,0.125;queuecommand,"Play");
+		PlayCommand=cmd(play);
+    },
     Def.Sound {
         File=THEME:GetPathS("MusicWheel", "change"),
         IsAction=true,
@@ -237,11 +251,11 @@ for i = 1, WheelSize do
 			end,
         },
 
-        Def.BitmapText {
+        --[[Def.BitmapText {
 			Name="Index",
 			Font="Common normal",
 			RefreshCommand=function(self,param) self:settext(Targets[i]) end
-		}
+		}--]]
     }
 end
 

@@ -108,7 +108,8 @@ local t = Def.ActorFrame {
 	Def.Sound {
         File=THEME:GetPathS("Common", "Start"),
         IsAction=true,
-        StepsChosenMessageCommand=function(self) self:play() end
+        StepsChosenMessageCommand=function(self) self:play() end,
+        SongUnchosenMessageCommand=function(self) self:play() end
     }
 }
 
